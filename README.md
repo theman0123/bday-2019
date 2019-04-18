@@ -1,3 +1,9 @@
+# Notes:
+
+- music/sounds
+- mask dark to light
+- draw a path and have 'paige' 'wander' the room
+
 # Phaser 3 Webpack Project Template
 
 A Phaser 3 Project Template with ES6 Classes
@@ -16,3 +22,11 @@ Run next commands in your terminal:
 | `npm start`   | Launch webpack.dev.js |
 
 =======
+
+CC:
+Thanks to the following for allowing me to use their art:
+
+- Frankum: "Ambient guitar X1" - Loop mode.
+  Original track by Frankum & Frankumjay.
+  Synths: Ableton live,S3,Kontakt,Yamaha piano.
+- alexbird: birds voice at early morning

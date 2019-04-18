@@ -17,11 +17,51 @@ export default class PreloaderScene extends Phaser.Scene {
     this.loadAssets();
   }
 
+  create() {
+    this.createAnims();
+  }
+
+  createAnims() {
+    this.anims.create({
+      key: "sparkle-dust-explosion",
+      frames: this.anims.generateFrameNames("sparkle-dust", {
+        frames: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+      }),
+      frameRate: 2,
+      yoyo: false,
+      hideOnComplete: true,
+    });
+    this.anims.create({
+      key: "paige-walks-e/w",
+      frames: this.anims.generateFrameNames("paige-east", {
+        frames: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      }),
+      frameRate: 7,
+      yoyo: false,
+      hideOnComplete: false,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "paige-walks-n/s",
+      frames: this.anims.generateFrameNames("paige-south", {
+        frames: [0, 1],
+      }),
+      frameRate: 3,
+      yoyo: false,
+      hideOnComplete: false,
+      repeat: -1,
+    });
+  }
+
   createPreloader() {
     this.width = this.cameras.main.width;
     this.height = this.cameras.main.height;
     // add logo image
-    this.logo = this.add.image(this.width / 2, this.height / 2 - 100, "phaser-logo");
+    this.logo = this.add.image(
+      this.width / 2,
+      this.height / 2 - 100,
+      "phaser-logo",
+    );
 
     // build loading bar and container
     this.progressBar = this.add.graphics();
@@ -101,13 +141,40 @@ export default class PreloaderScene extends Phaser.Scene {
   }
 
   loadAssets() {
-    // load assets for game
+    // load IMAGE assets for game
+    this.load.image("room", "assets/room2019.png");
+    this.load.image("round-cactus", "assets/cactus-round(32x32).png");
+    this.load.image("cactus", "assets/cactus(32x32) .png");
+    this.load.image("desert-rose", "assets/desert-rose(32x32).png");
+    this.load.image("peace-lily", "assets/peace-lily(32x32).png");
+    this.load.image("skinny-cactus", "assets/skinny-cactus(32x32).png");
+    this.load.image("snake-plant", "assets/snake-plant(32x32).png");
+    this.load.image("string-of-pearls", "assets/string-of-pearls(32x32).png");
+    this.load.spritesheet("watson", "assets/watson.png", {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+    this.load.spritesheet("sparkle-dust", "assets/sparkle-dust(32x32).png", {
+      frameWidth: 32,
+      frameHeight: 32,
+    });
+    this.load.spritesheet("paige-east", "assets/Paige_east.png", {
+      frameWidth: 36,
+      frameHeight: 48,
+    });
+    this.load.spritesheet("paige-south", "assets/Paige_south.png", {
+      frameWidth: 36,
+      frameHeight: 48,
+    });
+    // load MUSIC and SOUNDS
+    this.load.audio("birds", "assets/birds.wav");
+    this.load.audio("sunrise", "assets/sunrise.mp3");
   }
 
   ready() {
     this.readyCount++;
     if (this.readyCount === 2) {
-      this.scene.start("Title");
+      this.scene.start("Game");
     }
   }
 }
