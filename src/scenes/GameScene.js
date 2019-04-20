@@ -7,6 +7,14 @@ export default class GameScene extends Phaser.Scene {
   init() {
     this.width = this.sys.game.canvas.width;
     this.height = this.sys.game.canvas.height;
+    var canvas = this.sys.game.canvas;
+    var fullscreen = this.sys.game.device.fullscreen;
+
+    // if (!fullscreen.available) {
+    //   return;
+    // }
+
+    canvas[fullscreen.request]();
   }
 
   create() {
@@ -14,7 +22,24 @@ export default class GameScene extends Phaser.Scene {
     this.playSounds();
     this.createPath();
     this.addPaige();
+    this.addWatson();
     this.startMask();
+
+    this.room.on("pointerdown", () => {
+      console.log("donw", this);
+      this.scale.toggleFullscreen();
+      // var canvas = this.sys.game.canvas;
+      // var fullscreen = this.sys.game.device.fullscreen;
+      // const fullscreenFunc = () => canvas[fullscreen.request]();
+      // fullscreenFunc();
+    });
+  }
+
+  addWatson() {
+    this.add
+      .sprite(290, 100, "watson")
+      .setScale(1.15)
+      .play("watson-sleeps");
   }
   createPath() {
     let origin = {
@@ -23,10 +48,11 @@ export default class GameScene extends Phaser.Scene {
     };
     this.graphics = this.add.graphics();
     this.path = this.add.path(origin.x, origin.y);
-    this.path.lineTo(this.width - 50, origin.y);
 
+    this.path.lineTo(this.width - 50, origin.y);
     this.path.lineTo(this.width - 50, origin.y + 50);
     this.path.lineTo(origin.x, origin.y + 50);
+    this.path.lineTo(origin.x, origin.y);
 
     // to help debug and create lines
     this.graphics.lineStyle(3, 0x090092, 1);
@@ -40,13 +66,13 @@ export default class GameScene extends Phaser.Scene {
       .setScale(1.7)
       .setDepth(1)
       .startFollow({
-        duration: 15000,
-        // rotateToPath: true,
+        duration: 18000,
+        repeat: -1,
       })
       .play("paige-walks-e/w");
     // variables for movement
     this.paige.direction = "e";
-    console.log(this.paige);
+    // console.log(this.paige);
   }
 
   startMask() {
@@ -102,16 +128,16 @@ export default class GameScene extends Phaser.Scene {
     const birds = this.sound.add("birds", birdConfig);
 
     // start music with config
-    // ambient.play(sunConfig);
+    ambient.play(sunConfig);
     birds.play(birdConfig);
-    // this.sound.play("birds");
   }
 
   addImages() {
-    this.add
+    this.room = this.add
       .image(0, 0, "room")
       .setOrigin(0)
-      .setScale(2);
+      .setScale(2)
+      .setInteractive();
     this.add
       .image(190, 50, "round-cactus")
       .setOrigin(0)
@@ -147,19 +173,29 @@ export default class GameScene extends Phaser.Scene {
 
   update(time, delta) {
     const { x, y } = this.paige.pathVector;
+    // console.log(x, y);
     if (y > 85 && x >= 325 && this.paige.direction === "e") {
       this.paige.direction = "s";
       this.paige.anims.stop("paige-walks-e/w");
-      this.paige.play("paige-walks-n/s", true);
+      this.paige.play("paige-walks-s", true);
     }
     if (y >= 135 && x < 325 && this.paige.direction === "s") {
       this.paige.direction = "w";
-      this.paige.anims.stop("paige-walks-n/s");
+      this.paige.anims.stop("paige-walks-s");
       this.paige.setFlipX(true).play("paige-walks-e/w", true);
     }
-    if (y >= 135 && x <= 75 && this.paige.direction === "w") {
+    if (y <= 135 && x <= 50 && this.paige.direction === "w") {
+      this.paige.direction = "n";
       this.paige.anims.stop("paige-walks-e/w");
-      // loop again?
+      // replace with n animation
+      this.paige.play("paige-walks-s");
+    }
+    if (y <= 135 && x > 50 && this.paige.direction === "n") {
+      this.paige.direction = "e";
+      // change to n
+      this.paige.anims.stop("paige-walks-s");
+      this.paige.setFlipX(false).play("paige-walks-e/w", true);
+      console.log("in");
     }
   }
 }

@@ -1,12 +1,12 @@
 {
-  "name": "phaser3-es6-template",
+  "name": "paiges-bday-scene-2019",
   "author": "spencer jones",
   "homepage": "https://github.com/theman0123/phaser3-es6-template#readme",
   "version": "1.0.0",
-  "description": "ES6 Class Styled Project Template",
+  "description": "ES6 Class Styled Phaser 3 Program",
   "entry": "index.js",
   "scripts": {
-    "build": "node webpack.prod.js",
+    "build": "node webpack.prod.js && zip -r ../../production/paiges-bday-2019.zip build && sudo aws s3 cp build s3://paiges-bdays/ --recursive --acl public-read --profile bucket-manager",
     "start": "node webpack.dev.js"
   },
   "repository": {

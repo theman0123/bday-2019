@@ -10,15 +10,13 @@ export default class PreloaderScene extends Phaser.Scene {
   }
 
   preload() {
-    // time event for logo
-    // TODO - update delayedCall to 3000
-    this.timedEvent = this.time.delayedCall(2000, this.ready, [], this);
     this.createPreloader();
     this.loadAssets();
   }
 
   create() {
     this.createAnims();
+    this.ready();
   }
 
   createAnims() {
@@ -42,12 +40,22 @@ export default class PreloaderScene extends Phaser.Scene {
       repeat: -1,
     });
     this.anims.create({
-      key: "paige-walks-n/s",
+      key: "paige-walks-s",
       frames: this.anims.generateFrameNames("paige-south", {
-        frames: [0, 1],
+        frames: [0, 1, 2, 3],
       }),
       frameRate: 3,
       yoyo: false,
+      hideOnComplete: false,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "watson-sleeps",
+      frames: this.anims.generateFrameNames("watson", {
+        frames: [0, 1, 2, 3, 4, 5],
+      }),
+      frameRate: 2,
+      yoyo: true,
       hideOnComplete: false,
       repeat: -1,
     });
@@ -136,7 +144,6 @@ export default class PreloaderScene extends Phaser.Scene {
       this.loadingAssetsText.destroy();
       this.loadingText.destroy();
       this.percentText.destroy();
-      this.ready();
     });
   }
 
@@ -169,11 +176,11 @@ export default class PreloaderScene extends Phaser.Scene {
     // load MUSIC and SOUNDS
     this.load.audio("birds", "assets/birds.wav");
     this.load.audio("sunrise", "assets/sunrise.mp3");
+    this.readyCount++;
   }
 
   ready() {
-    this.readyCount++;
-    if (this.readyCount === 2) {
+    if (this.readyCount >= 2) {
       this.scene.start("Game");
     }
   }
