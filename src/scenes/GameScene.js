@@ -55,8 +55,8 @@ export default class GameScene extends Phaser.Scene {
     this.path.lineTo(origin.x, origin.y);
 
     // to help debug and create lines
-    this.graphics.lineStyle(3, 0x090092, 1);
-    this.path.draw(this.graphics);
+    // this.graphics.lineStyle(3, 0x090092, 1);
+    // this.path.draw(this.graphics);
   }
 
   addPaige() {
@@ -187,15 +187,12 @@ export default class GameScene extends Phaser.Scene {
     if (y <= 135 && x <= 50 && this.paige.direction === "w") {
       this.paige.direction = "n";
       this.paige.anims.stop("paige-walks-e/w");
-      // replace with n animation
-      this.paige.play("paige-walks-s");
+      this.paige.play("paige-walks-n");
     }
     if (y <= 135 && x > 50 && this.paige.direction === "n") {
       this.paige.direction = "e";
-      // change to n
       this.paige.anims.stop("paige-walks-s");
       this.paige.setFlipX(false).play("paige-walks-e/w", true);
-      console.log("in");
     }
   }
 }

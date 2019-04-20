@@ -41,8 +41,18 @@ export default class PreloaderScene extends Phaser.Scene {
     });
     this.anims.create({
       key: "paige-walks-s",
-      frames: this.anims.generateFrameNames("paige-south", {
+      frames: this.anims.generateFrameNames("paige-s-n", {
         frames: [0, 1, 2, 3],
+      }),
+      frameRate: 3,
+      yoyo: false,
+      hideOnComplete: false,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "paige-walks-n",
+      frames: this.anims.generateFrameNames("paige-s-n", {
+        frames: [4, 5, 6, 7],
       }),
       frameRate: 3,
       yoyo: false,
@@ -169,7 +179,7 @@ export default class PreloaderScene extends Phaser.Scene {
       frameWidth: 36,
       frameHeight: 48,
     });
-    this.load.spritesheet("paige-south", "assets/Paige_south.png", {
+    this.load.spritesheet("paige-s-n", "assets/Paige_s_n.png", {
       frameWidth: 36,
       frameHeight: 48,
     });
